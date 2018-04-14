@@ -12,11 +12,11 @@ public class PeliculaRes {
 	private int id;
 	private String nombre;
 	private String tipo;
-	private int preciopordia;
-	private Date FechaInicio;
-	private Date FechaFin;
+	private double preciopordia;
+	private Calendar FechaInicio;
+	private Calendar FechaFin;
 	
-	public PeliculaRes(int id, String nombre, String tipo, int preciopordia, Date fechaInicio, Date fechaFin) {
+	public PeliculaRes(int id, String nombre, String tipo, double preciopordia, Calendar fechaInicio, Calendar fechaFin) {
 		//super();
 		this.id = id;
 		this.nombre = nombre;
@@ -44,25 +44,36 @@ public class PeliculaRes {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	public int getPreciopordia() {
+	public double getPreciopordia() {
 		return preciopordia;
 	}
-	public void setPreciopordia(int preciopordia) {
+	public void setPreciopordia(double preciopordia) {
 		this.preciopordia = preciopordia;
 	}
-	public Date getFechaInicio() {
+	public Calendar getFechaInicio() {
 		return FechaInicio;
 	}
-	public void setFechaInicio(Date fechaInicio) {
+	public void setFechaInicio(Calendar fechaInicio) {
 		FechaInicio = fechaInicio;
 	}
-	public Date getFechaFin() {
+	public Calendar getFechaFin() {
 		return FechaFin;
 	}
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(Calendar fechaFin) {
 		FechaFin = fechaFin;
 	}
 	
-	
-
+	//Metodo que calcula los dias entre la fecha de inicio y la fecha de fin
+	public static int getDiasRestantes(Calendar fechaInicial,Calendar fechaFinal){
+		int diffDays=0;
+			if(fechaFinal.before(fechaInicial) || fechaInicial.equals(fechaFinal)){
+				diffDays=0;
+			}else{
+				while(fechaInicial.before(fechaFinal) || fechaInicial.equals(fechaFinal)){
+					diffDays++;
+					fechaInicial.add(Calendar.DATE, 1);
+				}
+			}
+			return diffDays==0?0:diffDays-1;
+		}
 }
