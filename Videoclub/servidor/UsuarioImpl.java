@@ -6,6 +6,7 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     private Informacion inf;
     private List<PeliculaRes> peliculasRes;
     private double pago=0.0;
+    private double saldo;
     
     UsuarioImpl(Informacion t) throws RemoteException {
         inf = t;
@@ -28,7 +29,28 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     	peliculasRes.remove(peli);
     }
     public double PrecioTotal(PeliculaRes peli) throws RemoteException{
+    	this.pago=peli.getPreciopordia()*PeliculaRes.getDiasRestantes(peli.getFechaInicio(), peli.getFechaFin());
     	return peli.getPreciopordia()*PeliculaRes.getDiasRestantes(peli.getFechaInicio(), peli.getFechaFin());
     }
+    //Obtiene el saldo actual del cliente
+    public double getSaldo() throws RemoteException{
+    	return this.saldo;
+    }
     
+    //Recarga el saldo de un Usuario,para realizarle el pago
+    public void setSaldo(double recarga) throws RemoteException{
+    	this.saldo+=recarga;
+    }
+    
+    //Realiza el calculo pago correspondiente
+    public boolean realizaPago() throws RemoteException{
+    	boolean correcto=true;
+    	if(this.saldo==0 || this.saldo<this.pago){
+    		correcto=false;
+    	}
+    	else{
+    		this.saldo-=this.pago;
+    	}
+    	return correcto;
+    }
 }
