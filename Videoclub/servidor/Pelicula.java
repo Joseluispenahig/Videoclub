@@ -6,7 +6,9 @@
  * @author José Luis Peña
  *
  */
-public class Pelicula {
+import java.io.*;
+
+public class Pelicula implements Serializable{
 	
 	private int id;
 	private String nombre;
