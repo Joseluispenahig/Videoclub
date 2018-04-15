@@ -5,7 +5,7 @@ import java.rmi.server.*;
 class ClienteVideoclub {
     static public void main (String args[]) {
         if (args.length!=4) {
-            System.err.println("Uso: ClienteVideoclub hostregistro numPuertoRegistro nombreTitular IDTitular");
+            System.err.println("Uso: ClienteVideoclub hostregistro numPuertoRegistro IDusuario NombreUsuario");
             return;
         }
 
@@ -14,10 +14,19 @@ class ClienteVideoclub {
 
         try {
             Videoclub srv = (Videoclub) Naming.lookup("//" + args[0] + ":" + args[1] + "/Videoclub");
-            Informacion info = new Informacion(args[2], args[3]);
+            Informacion info = new Informacion(Integer.parseInt(args[2]), args[3],"Apellido1","Apellido2","email","telefono");
             Usuario c = srv.crearUsuario(info);
             
-            
+            System.out.println(c.obtenerInformacion());
+            System.out.println(info.getId());
+    	    System.out.println(c.obtenerInformacion().getNombre());
+    	    
+    	    List <Pelicula> listapelis;
+    	    listapelis = srv.obtenerPeliculas();
+    	    
+    	    for (Pelicula i: listapelis) {
+    	    	System.out.println(i.getNombre());
+    	    }
             /*
             c.operacion(30);
 

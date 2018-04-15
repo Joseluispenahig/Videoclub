@@ -7,6 +7,7 @@ class VideoclubImpl extends UnicastRemoteObject implements Videoclub {
     List <Pelicula> peldisponibles;
     VideoclubImpl() throws RemoteException {
         l = new LinkedList<Usuario>();
+        peldisponibles = new LinkedList<Pelicula>();
     }
     public Usuario crearUsuario(Informacion t) throws RemoteException {
         Usuario c = new UsuarioImpl(t);
