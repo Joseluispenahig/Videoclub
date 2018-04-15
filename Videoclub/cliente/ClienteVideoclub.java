@@ -1,0 +1,117 @@
+import java.util.*;
+import java.util.Scanner;
+import java.rmi.*;
+import java.rmi.server.*;
+
+class ClienteVideoclub {
+    static public void main (String args[]) {
+        if (args.length!=8) {
+            System.err.println("Uso: ClienteVideoclub hostregistro numPuertoRegistro "
+            		+ "IDusuario NombreUsuario Apellido1 Apellido2 email telefono");
+            return;
+        }
+
+       if (System.getSecurityManager() == null)
+            System.setSecurityManager(new SecurityManager());
+
+        try {
+            Videoclub srv = (Videoclub) Naming.lookup("//" + args[0] + ":" + args[1] + "/Videoclub");
+            Informacion info = new Informacion(Integer.parseInt(args[2]), args[3],args[4],args[5],
+            		args[6],args[7]);
+            Usuario c = srv.crearUsuario(info);
+            if(c != null)
+            {
+           	System.out.print("\033[H\033[2J");
+	        System.out.flush();
+            System.out.println("Id: " + info.getId());
+    	    System.out.println("Nombre: " + info.getNombre());
+    	    System.out.println("Apellidos: " + info.getApellido1() + " " + info.getApellido2());
+    	    System.out.println("email: " + info.getEmail());
+    	    System.out.println("Teléfono: " + info.getTelefono() + "\n");
+    	    
+    	    Scanner sn = new Scanner(System.in);
+    	    boolean salir = false;
+    	    int opcion;
+    	    
+    	    while(!salir) {
+    	    		System.out.println("1. Obtener lista de películas");
+    	           System.out.println("2. Sacar película");
+    	           System.out.println("3. Devolver película");
+    	           System.out.println("4. Salir");
+    	           try { 
+    	           System.out.println("Escribe una de las opciones");
+    	           opcion = sn.nextInt();
+    	           
+    	           if(opcion==1){
+    	        	   System.out.print("\033[H\033[2J");
+    	        	   System.out.flush();
+    	        	   List <Pelicula> listapelis;
+    	       	    listapelis = srv.obtenerPeliculas();
+    	       	    
+    	       	    for (Pelicula i: listapelis) {
+    	       	    	System.out.println("-----------------------------");
+    	       	    	System.out.println("ID de la película: " + i.getId());
+    	       	    	System.out.println("Nombre de la película: " + i.getNombre());
+    	       	    	System.out.println("Género: " + i.getTipo());
+    	       	    	System.out.println("Cantidad disponible: " + i.getNumero());    	       	    	
+    	       	    }
+    	       	    System.out.println("\n");
+    	           }
+    	           else if(opcion==2){
+    	        	   System.out.print("\033[H\033[2J");
+    	        	   System.out.flush();
+    	        	   System.out.println("Vamos a sacar película\n");
+    	           }
+    	           else if(opcion==3) {
+    	        	   System.out.print("\033[H\033[2J");
+    	        	   System.out.flush();
+    	        	   System.out.println("Vamos a devolver película\n");
+    	           }
+    	           else if(opcion==4){
+    	        	   salir = true;
+    	           }
+    	           else {
+    	        	   System.out.print("\033[H\033[2J");
+    	        	   System.out.flush();
+    	        	   System.out.println("Introduce un número entre el 1 y el 4\n");
+    	           }
+    	           }
+    	           catch (InputMismatchException e) {
+    	        	   System.out.print("\033[H\033[2J");
+    	        	   System.out.flush();
+    	                System.out.println("Debes insertar un número\n");
+    	                sn.next();
+    	            }
+    	    }
+    	    
+    	    
+            }
+            else {
+            	System.out.println("Error al crear usuario");
+            }
+            /*
+            c.operacion(30);
+
+            List <Cuenta> l;
+            l = srv.obtenerCuentas();
+            for (Cuenta i: l) {
+                Titular t = i.obtenerTitular();
+                System.out.println(t + ": " +i.obtenerSaldo());
+            }
+
+            c.operacion(-5);
+
+            l = srv.obtenerCuentas();
+            for (Cuenta i: l)
+                System.out.println(i.obtenerTitular() + ": " +i.obtenerSaldo());
+                */
+        }
+        catch (RemoteException e) {
+            System.err.println("Error de comunicacion: " + e.toString());
+        }
+        catch (Exception e) {
+            System.err.println("Excepcion en ClienteVideoclub: " + e.toString());
+            e.printStackTrace();
+        }
+    }
+}

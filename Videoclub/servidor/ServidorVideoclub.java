@@ -1,10 +1,10 @@
 import java.rmi.*;
 import java.rmi.server.*;
 
-class ServidorBanco  {
+class ServidorVideoclub  {
 	static public void main (String args[]) {
        if (args.length!=1) {
-            System.err.println("Uso: ServidorBanco numPuertoRegistro");
+            System.err.println("Uso: ServidorVideoclub numPuertoRegistro");
             return;
         }
         if (System.getSecurityManager() == null) {
