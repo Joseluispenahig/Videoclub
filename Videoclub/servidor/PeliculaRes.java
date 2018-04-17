@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 /**
  * 
@@ -8,7 +9,7 @@ import java.util.*;
  * @author salas
  *
  */
-public class PeliculaRes {
+public class PeliculaRes implements Serializable{
 	private int id;
 	private String nombre;
 	private String tipo;

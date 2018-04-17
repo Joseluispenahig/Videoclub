@@ -10,6 +10,7 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     
     UsuarioImpl(Informacion t) throws RemoteException {
         inf = t;
+        peliculasRes = new LinkedList<PeliculaRes>();
     }
     public Informacion obtenerInformacion() throws RemoteException {
         return inf;
@@ -17,16 +18,18 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     /*Metodo que reservara una pelicula,por tanto se le pondra la fecha inicial la actual
     y se añadira a la lista de peliculas reservadas*/
     public void reservarPelicula(PeliculaRes pelicula) throws RemoteException{
-    	pelicula.setFechaInicio(Calendar.getInstance());
+    	/*
+    	
+    	Calendar fechaActual=Calendar.getInstance();
+    	fechaActual.add(Calendar.MONTH, 1);
+    	pelicula.setFechaFin(fechaActual);
+    	*/
     	peliculasRes.add(pelicula);
     }
     /*Metodo que devolvera una pelicula,por tanto se le pondra la fecha final
      en principio 1 mes y se añadira a la lista de peliculas reservadas*/
-    public void devolverPelicula(PeliculaRes peli) throws RemoteException{
-    	Calendar fechaActual=Calendar.getInstance();
-    	fechaActual.add(Calendar.MONTH, 1);
-    	peli.setFechaFin(fechaActual);
-    	peliculasRes.remove(peli);
+    public void devolverPelicula(int id) throws RemoteException{
+    		peliculasRes.remove(id); 	
     }
     public double PrecioTotal(PeliculaRes peli) throws RemoteException{
     	this.pago=peli.getPreciopordia()*PeliculaRes.getDiasRestantes(peli.getFechaInicio(), peli.getFechaFin());
@@ -52,5 +55,9 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     		this.saldo-=this.pago;
     	}
     	return correcto;
+    }
+    
+    public List<PeliculaRes> obtenerPeliculas() throws RemoteException{
+    	return peliculasRes;
     }
 }
