@@ -11,9 +11,10 @@ class VideoclubImpl extends UnicastRemoteObject implements Videoclub {
         String [] nombre={"007","Batman Begins"};
     	String [] tipo={"Accion","Accion"};
     	int [] cantidad={1,2};
+    	double [] precio={4.5,3};
     	
     	for(int i=0;i<nombre.length;i++){
-    		Pelicula peli=new Pelicula(i,nombre[i],tipo[i],cantidad[i]);
+    		Pelicula peli=new Pelicula(i,nombre[i],tipo[i],cantidad[i],precio[i]);
     		peldisponibles.add(peli);
     	}
     }

@@ -62,7 +62,8 @@ class ClienteVideoclub {
     	    					System.out.println("ID de la película: " + i.getId());
     	    					System.out.println("Nombre de la película: " + i.getNombre());
     	    					System.out.println("Género: " + i.getTipo());
-    	    					System.out.println("Cantidad disponible: " + i.getNumero());    	       	    	
+    	    					System.out.println("Cantidad disponible: " + i.getNumero());
+    	    					System.out.println("Precio/dia: " + i.getPreciopordia());
     	    				}
     	    				System.out.println("-----------------------------\n");
     	    			}
@@ -74,6 +75,10 @@ class ClienteVideoclub {
     	    				Calendar fechaFinal=Calendar.getInstance();
     	    				Calendar fechaActual2=Calendar.getInstance();
     	    				Calendar fechaFinal2=Calendar.getInstance();
+    	    				fechaActual.add(Calendar.MONTH,1);
+    	    				fechaFinal.add(Calendar.MONTH,1);
+    	    				fechaActual2.add(Calendar.MONTH,1);
+    	    				fechaFinal2.add(Calendar.MONTH,1);
     	    				idpeli = sn.nextInt();
     	    				boolean encontrada=false;
     	    				List <Pelicula> listapelis;
@@ -85,10 +90,12 @@ class ClienteVideoclub {
        	       	    				dia = sn.nextInt();
        	       	    				fechaFinal.add(Calendar.DAY_OF_MONTH, dia);
        	       	    				fechaFinal2.add(Calendar.DAY_OF_MONTH, dia);
+       	       	    				//PeliculaRes pelireserva= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
+       	       	    				//		3.00,fechaActual,fechaFinal);
        	       	    				PeliculaRes pelireserva= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
-       	       	    						3.00,fechaActual,fechaFinal);
+           	       	    						i.getPreciopordia(),fechaActual,fechaFinal);
        	       	    				PeliculaRes pelireserva2= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
-   	       	    						3.00,fechaActual2,fechaFinal2);
+   	       	    						i.getPreciopordia(),fechaActual2,fechaFinal2);
        	       	    				if(c.getSaldo()>c.PrecioTotal(pelireserva2)) {
        	       	    					c.reservarPelicula(pelireserva);
        	       	    					c.realizaPago();

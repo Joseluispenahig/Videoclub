@@ -7,6 +7,7 @@ public class Main {
 		String nombre="Avengers";
 		String tipo="Drama";
 		int numero=3;
+		double precio=3.0;
 		//Date fecha=new Date();
 		//Date fecha2=new Date(2018,4,16);
 		
@@ -15,7 +16,7 @@ public class Main {
 		
 		
 		
-		Pelicula pelicula = new Pelicula(id,nombre,tipo,numero);
+		Pelicula pelicula = new Pelicula(id,nombre,tipo,numero,precio);
 		System.out.println("Pelicula nombre:" +  pelicula.getNombre());
 		
 		fecha=Calendar.getInstance();

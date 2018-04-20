@@ -14,13 +14,15 @@ public class Pelicula implements Serializable{
 	private String nombre;
 	private String tipo;
 	private int numero;
+	private double preciopordia;
 	
-	public Pelicula(int id, String nombre, String tipo, int numero) {
+	public Pelicula(int id, String nombre, String tipo, int numero,double precio) {
 		//super();
 		this.id = id;
 		this.nombre = nombre;
 		this.tipo = tipo;
 		this.numero = numero;
+		this.preciopordia=precio;
 	}
 	
 	public int getId() {
@@ -46,6 +48,14 @@ public class Pelicula implements Serializable{
 	}
 	public void setNumero(int numero) {
 		this.numero = numero;
+	}
+
+	public double getPreciopordia() {
+		return preciopordia;
+	}
+
+	public void setPreciopordia(double preciopordia) {
+		this.preciopordia = preciopordia;
 	}
 	
 	
