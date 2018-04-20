@@ -32,9 +32,11 @@ class ClienteVideoclub {
     	    boolean salir = false;
     	    int opcion;
     	    int idpeli;
-    	    Calendar fechaActual=Calendar.getInstance();
-    	    Calendar fechaFinal=Calendar.getInstance();
-        	fechaFinal.add(Calendar.MONTH, 1);
+    	    int saldo=0;
+    	    int dia;
+    	    int mes;
+    	    int año;
+        	
     	    List <PeliculaRes> listapelisres;
     	    
     	    while(!salir) {
@@ -42,7 +44,9 @@ class ClienteVideoclub {
     	    		System.out.println("2. Sacar película");
     	    		System.out.println("3. Devolver película");
     	    		System.out.println("4. Mostrar películas sacadas");
-    	    		System.out.println("5. Salir");
+    	    		System.out.println("5. Añadir saldo");
+    	    		System.out.println("6. Consultar saldo");
+    	    		System.out.println("7. Salir");
     	    		try { 
     	    			System.out.println("Escribe una de las opciones");
     	    			opcion = sn.nextInt();
@@ -66,6 +70,10 @@ class ClienteVideoclub {
     	    				System.out.print("\033[H\033[2J");
     	    				System.out.flush();
     	    				System.out.println("Introduce el ID de la película que quieres sacar");
+    	    	    	    Calendar fechaActual=Calendar.getInstance();
+    	    				Calendar fechaFinal=Calendar.getInstance();
+    	    				Calendar fechaActual2=Calendar.getInstance();
+    	    				Calendar fechaFinal2=Calendar.getInstance();
     	    				idpeli = sn.nextInt();
     	    				boolean encontrada=false;
     	    				List <Pelicula> listapelis;
@@ -73,11 +81,23 @@ class ClienteVideoclub {
        	       	    		for (Pelicula i: listapelis) {
        	       	    			if(i.getId()==idpeli && i.getNumero()>0) {
        	       	    				encontrada=true;
+       	       	    				System.out.println("Durante cuántos días quieres alquilar la película?");
+       	       	    				dia = sn.nextInt();
+       	       	    				fechaFinal.add(Calendar.DAY_OF_MONTH, dia);
+       	       	    				fechaFinal2.add(Calendar.DAY_OF_MONTH, dia);
        	       	    				PeliculaRes pelireserva= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
-       	       	    						1.00,fechaActual,fechaFinal);
-       	       	    				c.reservarPelicula(pelireserva);
-       	       	    				srv.reservarPelicula(i.getId());
-       	       	    				System.out.println("Has sacado la película con éxito\n");
+       	       	    						3.00,fechaActual,fechaFinal);
+       	       	    				PeliculaRes pelireserva2= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
+   	       	    						3.00,fechaActual2,fechaFinal2);
+       	       	    				if(c.getSaldo()>c.PrecioTotal(pelireserva2)) {
+       	       	    					c.reservarPelicula(pelireserva);
+       	       	    					c.realizaPago();
+       	       	    					srv.reservarPelicula(i.getId());
+       	       	    					System.out.println("Has sacado la película con éxito\n");       	       	    				
+       	       	    				}
+       	       	    				else {
+       	       	    					System.out.println("No tienes el suficiente saldo para sacar la película");
+       	       	    				}
        	       	    			}
        	       	    		}
        	       	    		if(encontrada==false){
@@ -115,6 +135,16 @@ class ClienteVideoclub {
        	       	       				System.out.println("ID de la película: " + i.getId());
        	       	       				System.out.println("Nombre de la película: " + i.getNombre());
        	       	       				System.out.println("Género: " + i.getTipo());
+       	       	       				String cadenaFecha = String.format("%04d-%02d-%02d",
+       	       	       						i.getFechaFin().get(Calendar.YEAR),
+       	       	       						i.getFechaFin().get(Calendar.MONTH),
+       	       	       						i.getFechaFin().get(Calendar.DAY_OF_MONTH));
+       	       	       				String cadenaFechainicio = String.format("%04d-%02d-%02d",
+	       	       						i.getFechaInicio().get(Calendar.YEAR),
+	       	       						i.getFechaInicio().get(Calendar.MONTH),
+	       	       						i.getFechaInicio().get(Calendar.DAY_OF_MONTH));
+       	       	       				System.out.println("Fecha de inicio del alquiler: " + cadenaFechainicio);
+       	       	       				System.out.println("Fecha de fin del alquiler: " + cadenaFecha);
     	    					}
     	    					System.out.println("-----------------------------\n");	
     	    				}
@@ -123,12 +153,24 @@ class ClienteVideoclub {
     	    				}
     	    			}
     	    			else if(opcion==5) {
+    	    				System.out.print("\033[H\033[2J");
+    	    				System.out.flush();
+    	    				System.out.println("Escribe la cantidad que quieres añadir");
+        	    			saldo = sn.nextInt();
+        	    			c.setSaldo(saldo);
+    	    			}
+    	    			else if(opcion==6) {
+    	    				System.out.print("\033[H\033[2J");
+    	    				System.out.flush();
+    	    				System.out.println(c.getSaldo());
+    	    			}
+    	    			else if(opcion==7) {
     	    				salir = true;
     	    			}
     	    			else {
     	    				System.out.print("\033[H\033[2J");
     	    				System.out.flush();
-    	    				System.out.println("Introduce un número entre el 1 y el 5\n");
+    	    				System.out.println("Introduce un número entre el 1 y el 7\n");
     	    			}
     	    		}
     	    		catch (InputMismatchException e) {

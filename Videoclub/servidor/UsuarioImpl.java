@@ -26,8 +26,10 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     		peliculasRes.remove(id); 	
     }
     public double PrecioTotal(PeliculaRes peli) throws RemoteException{
-    	this.pago=peli.getPreciopordia()*PeliculaRes.getDiasRestantes(peli.getFechaInicio(), peli.getFechaFin());
-    	return peli.getPreciopordia()*PeliculaRes.getDiasRestantes(peli.getFechaInicio(), peli.getFechaFin());
+    	double precio;
+    	precio=peli.getPreciopordia()*PeliculaRes.getDiasRestantes(peli.getFechaInicio(), peli.getFechaFin());
+    	this.pago=precio;
+    	return precio;
     }
     //Obtiene el saldo actual del cliente
     public double getSaldo() throws RemoteException{
