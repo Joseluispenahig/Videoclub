@@ -33,4 +33,21 @@ class VideoclubImpl extends UnicastRemoteObject implements Videoclub {
     public List<Pelicula> obtenerPeliculas() throws RemoteException{
     	return peldisponibles;
     }
+    
+    public void reservarPelicula(int id) throws RemoteException{
+    	for (Pelicula i: peldisponibles) {
+	    			if(i.getId()==id) {
+	    				i.setNumero(i.getNumero()-1);		
+	    			}
+    	}
+    }
+    
+    public void devolverPelicula(int id) throws RemoteException{
+    	for (Pelicula i: peldisponibles) {
+	    			if(i.getId()==id) {
+	    				i.setNumero(i.getNumero()+1);		
+	    			}
+    	}
+    }
+    	
 }

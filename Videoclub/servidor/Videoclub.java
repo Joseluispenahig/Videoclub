@@ -7,4 +7,6 @@ interface Videoclub extends Remote {
 	List<Usuario> obtenerUsuario() throws RemoteException;
 	void eliminarUsuario(Informacion t) throws RemoteException;
 	public List<Pelicula> obtenerPeliculas() throws RemoteException;
+	public void reservarPelicula(int id) throws RemoteException;
+	public void devolverPelicula(int id) throws RemoteException;
 }

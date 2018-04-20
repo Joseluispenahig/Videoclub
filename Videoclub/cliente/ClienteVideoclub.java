@@ -71,11 +71,12 @@ class ClienteVideoclub {
     	    				List <Pelicula> listapelis;
        	       	    		listapelis = srv.obtenerPeliculas();
        	       	    		for (Pelicula i: listapelis) {
-       	       	    			if(i.getId()==idpeli) {
+       	       	    			if(i.getId()==idpeli && i.getNumero()>0) {
        	       	    				encontrada=true;
        	       	    				PeliculaRes pelireserva= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
        	       	    						1.00,fechaActual,fechaFinal);
        	       	    				c.reservarPelicula(pelireserva);
+       	       	    				srv.reservarPelicula(i.getId());
        	       	    				System.out.println("Has sacado la película con éxito\n");
        	       	    			}
        	       	    		}
@@ -95,6 +96,7 @@ class ClienteVideoclub {
        	       	    			if(i.getId()==idpeli) {
        	       	    				encontrada=true;
        	       	    				c.devolverPelicula(indice);
+       	       	    				srv.devolverPelicula(idpeli);
        	       	    				System.out.println("Has devuelto la película con éxito\n");
        	       	    			}
        	       	    			indice++;
@@ -126,7 +128,7 @@ class ClienteVideoclub {
     	    			else {
     	    				System.out.print("\033[H\033[2J");
     	    				System.out.flush();
-    	    				System.out.println("Introduce un número entre el 1 y el 4\n");
+    	    				System.out.println("Introduce un número entre el 1 y el 5\n");
     	    			}
     	    		}
     	    		catch (InputMismatchException e) {
@@ -135,29 +137,11 @@ class ClienteVideoclub {
     	    			System.out.println("Debes insertar un número\n");
     	    			sn.next();
     	            	}
-    	    	}
-    	    
-    	    
+    	    	}    
             }
             else {
             	System.out.println("Error al crear usuario");
             	}
-            	/*
-            c.operacion(30);
-
-            List <Cuenta> l;
-            l = srv.obtenerCuentas();
-            for (Cuenta i: l) {
-                Titular t = i.obtenerTitular();
-                System.out.println(t + ": " +i.obtenerSaldo());
-            }
-
-            c.operacion(-5);
-
-            l = srv.obtenerCuentas();
-            for (Cuenta i: l)
-                System.out.println(i.obtenerTitular() + ": " +i.obtenerSaldo());
-                */
         }
         catch (RemoteException e) {
             System.err.println("Error de comunicacion: " + e.toString());

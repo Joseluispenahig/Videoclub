@@ -6,7 +6,7 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     private Informacion inf;
     private List<PeliculaRes> peliculasRes;
     private double pago=0.0;
-    private double saldo;
+    private double saldo=0.0;
     
     UsuarioImpl(Informacion t) throws RemoteException {
         inf = t;
@@ -18,12 +18,6 @@ class UsuarioImpl extends UnicastRemoteObject implements Usuario {
     /*Metodo que reservara una pelicula,por tanto se le pondra la fecha inicial la actual
     y se añadira a la lista de peliculas reservadas*/
     public void reservarPelicula(PeliculaRes pelicula) throws RemoteException{
-    	/*
-    	
-    	Calendar fechaActual=Calendar.getInstance();
-    	fechaActual.add(Calendar.MONTH, 1);
-    	pelicula.setFechaFin(fechaActual);
-    	*/
     	peliculasRes.add(pelicula);
     }
     /*Metodo que devolvera una pelicula,por tanto se le pondra la fecha final
