@@ -27,10 +27,20 @@ class VideoclubImpl extends UnicastRemoteObject implements Videoclub {
        return l;
     }
     
-    public void eliminarUsuario(Informacion t) throws RemoteException{
-    	Usuario d = new UsuarioImpl(t);
-    	l.remove(d);
+    public void eliminarUsuario(int id) throws RemoteException{
+    	int indice=0;
+    	boolean flag=true;
+    	for (Usuario i: l) {
+    		if(i.obtenerInformacion().getId()==id && flag) {
+    			l.remove(indice);	
+    			flag=false;
+    		}
+    		else {
+    			indice++;
+    		}
+    	}	
     }
+    
     public List<Pelicula> obtenerPeliculas() throws RemoteException{
     	return peldisponibles;
     }
