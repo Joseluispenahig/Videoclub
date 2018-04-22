@@ -91,31 +91,38 @@ class ClienteVideoclub {
        	       	    			}       	       	    				
        	       	    		}       	       	    		       	       	    	       	       	    		       	       	    		
        	       	    		for (Pelicula i: listapelis) {    
-       	       	    			if(i.getId()==idpeli && i.getNumero()>0 && repetida==false) {
+       	       	    			if(i.getId()==idpeli && encontrada==false) {
        	       	    				encontrada=true;
-       	       	    				System.out.println("Durante cuántos días quieres alquilar la película?");
-       	       	    				dia = sn.nextInt();
-       	       	    				fechaFinal.add(Calendar.DAY_OF_MONTH, dia);
-       	       	    				fechaFinal2.add(Calendar.DAY_OF_MONTH, dia);
-       	       	    				PeliculaRes pelireserva= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
-       	       	    						i.getPreciopordia(),fechaActual,fechaFinal);
-       	       	    				PeliculaRes pelireserva2= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
-       	       	    						i.getPreciopordia(),fechaActual2,fechaFinal2);
-       	       	    				if(c.getSaldo()>c.PrecioTotal(pelireserva2)) {
-       	       	    					c.reservarPelicula(pelireserva);
-       	       	    					c.realizaPago();
-       	       	    					srv.reservarPelicula(i.getId());
-       	       	    					System.out.println("Has sacado la película con éxito\n");       	       	    				
+       	       	    				if(i.getNumero()>0) {
+       	       	    					if(repetida==false) {
+       	       	    						System.out.println("Durante cuántos días quieres alquilar la película?");
+       	       	    						dia = sn.nextInt();
+       	       	    						fechaFinal.add(Calendar.DAY_OF_MONTH, dia);
+       	       	    						fechaFinal2.add(Calendar.DAY_OF_MONTH, dia);
+       	       	    						PeliculaRes pelireserva= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
+       	       	    								i.getPreciopordia(),fechaActual,fechaFinal);
+       	       	    						PeliculaRes pelireserva2= new PeliculaRes(idpeli,i.getNombre(),i.getTipo(),
+       	       	    								i.getPreciopordia(),fechaActual2,fechaFinal2);
+       	       	    						if(c.getSaldo()>c.PrecioTotal(pelireserva2)) {
+       	       	    							c.reservarPelicula(pelireserva);
+       	       	    							c.realizaPago();
+       	       	    							srv.reservarPelicula(i.getId());
+       	       	    							System.out.println("Has sacado la película con éxito\n");       	       	    				
+       	       	    						}
+       	       	    						else {
+       	       	    							System.out.println("No tienes el suficiente saldo para sacar la película");
+       	       	    						}
+       	       	    					}
+       	       	    					else {
+       	       	    						System.out.println("Película repetida\n");
+       	       	    					}
        	       	    				}
        	       	    				else {
-       	       	    					System.out.println("No tienes el suficiente saldo para sacar la película");
+       	       	    					System.out.println("Película no disponible\n");
        	       	    				}
-       	       	    			}
+       	       	    			}       	       	    		
        	       	    		}
-       	       	    		if(repetida==true) {
-       	       	    		System.out.println("Película repetida\n");
-       	       	    		}
-       	       	    		else if(encontrada==false){
+       	       	    		if(encontrada==false) {
        	       	    			System.out.println("No se ha encontrado la película\n");
        	       	    		}
     	    			}
